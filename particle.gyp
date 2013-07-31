@@ -31,11 +31,13 @@
         ],
       },
       'dependencies': [
+        '<(cpp_src_dir)/third_party/boost.gyp:boost_common',
+        '<(cpp_src_dir)/third_party/folly.gyp:folly',
+        '<(cpp_src_dir)/third_party/glog.gyp:glog',
+        '<(cpp_src_dir)/third_party/sparsehash.gyp:sparsehash',
         '<(particle_home)/particle.gyp:headers',
         '<(particle_home)/particle.gyp:signal',
         '<(particle_home)/particle.gyp:typename',
-        '<(cpp_src_dir)/third_party/folly.gyp:folly',
-        '<(cpp_src_dir)/third_party/sparsehash.gyp:sparsehash',
       ],
       'sources': [
         'commons.gypi',
@@ -45,8 +47,8 @@
       'target_name': 'particle_testlib',
       'type': 'none',
       'dependencies': [
-        '<(cpp_src_dir)/third_party/gtest.gyp:gtest',
         '<(cpp_src_dir)/third_party/gmock.gyp:gmock',
+        '<(cpp_src_dir)/third_party/gtest.gyp:gtest',
       ],
     },
     {
