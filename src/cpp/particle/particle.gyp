@@ -22,12 +22,23 @@
     {
       'target_name': 'headers',
       'type': 'none',
+      'all_dependent_settings': {
+        'cflags': [
+          '-pthread',
+        ],
+        'link_settings': {
+          'libraries': [
+            '-pthread',
+          ],
+        },
+      },
       'sources': [
         'bithacks.h',
         'branch.h',
         'byteordering.h',
         'functional.h',
         'memory.h',
+        'ringbuffer.h',
         'thread.h',
       ],
     },
@@ -56,19 +67,13 @@
       'dependencies': [
         '<@(cpp_src_dir)/third_party/gtest.gyp:gtest_main',
         '<@(cpp_src_dir)/third_party/gmock.gyp:gmock',
+        'headers',
         'typename',
       ],
-      'cflags': [
-        '-pthread',
-      ],
-      'link_settings': {
-        'libraries': [
-          '-pthread',
-        ],
-      },
       'sources': [
         'bithacks_test.cc',
         'memory_test.cc',
+        'ringbuffer_test.cc',
         'typename_test.cc',
       ],
     },

@@ -34,6 +34,8 @@
         '<(particle_home)/particle.gyp:headers',
         '<(particle_home)/particle.gyp:signal',
         '<(particle_home)/particle.gyp:typename',
+        '<(cpp_src_dir)/third_party/folly.gyp:folly',
+        '<(cpp_src_dir)/third_party/sparsehash.gyp:sparsehash',
       ],
       'sources': [
         'commons.gypi',
