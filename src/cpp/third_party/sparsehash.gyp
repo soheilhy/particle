@@ -22,9 +22,6 @@
     'sparse_hash_home': 'sparsehash',
     'sparse_hash_src_home': '<(sparse_hash_home)/src',
   },
-  'includes': [
-    '../../commons.gypi',
-  ],
   'targets': [
     {
       'target_name': 'sparsehash',
