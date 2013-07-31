@@ -18,6 +18,7 @@
 #include "folly/Format.h"
 
 #include <fcntl.h>
+#include <gflags/gflags.h>
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <system_error>
