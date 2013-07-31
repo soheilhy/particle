@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012, The Cyrus project authors.
+ * Copyright (C) 2012, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,15 +25,14 @@
  * @version 0.1
  */
 
-#ifndef CPP_CYRUS_COMMON_TYPE_TRAITS_H_
-#define CPP_CYRUS_COMMON_TYPE_TRAITS_H_
+#ifndef CPP_PARTICLE_TYPE_TRAITS_H_
+#define CPP_PARTICLE_TYPE_TRAITS_H_
 
 #include <tuple>
 #include <type_traits>
 #include <utility>
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 // Note: Since type traits are like functions for TMP, assume structs are
 // functions, and don't follow the general style rules for classes and structs.
@@ -73,8 +72,7 @@ struct is_pair : std::false_type {};
 template <typename T1, typename T2>
 struct is_pair<std::pair<T1, T2>> : std::true_type {};
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_TYPE_TRAITS_H_
+#endif  // CPP_PARTICLE_TYPE_TRAITS_H_
 

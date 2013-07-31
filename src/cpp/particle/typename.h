@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, The Cyrus project authors.
+ * Copyright (C) 2012-2013, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
  * @file
  * @brief Common utilities for type names.
  *
- * Note: We only support g++.
+ * Note: This only supports g++ and clang++.
  *
  * @author Soheil Hassas Yeganeh <soheil@cs.toronto.edu>
  * @version 0.1
  */
 
-#ifndef CPP_CYRUS_COMMON_TYPENAME_H_
-#define CPP_CYRUS_COMMON_TYPENAME_H_
+#ifndef CPP_PARTICLE_TYPENAME_H_
+#define CPP_PARTICLE_TYPENAME_H_
 
 #include <utility>
 #include <string>
@@ -36,8 +36,7 @@
 
 #include "boost/utility/string_ref.hpp"
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 enum class TypeDelimiters : char {
   PAIR_SEP = ',',
@@ -100,8 +99,7 @@ inline bool is_pair_typename(const std::string& t) {
   return !pair_types.first.empty() && !pair_types.second.empty();
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_TYPENAME_H_
+#endif  // CPP_PARTICLE_TYPENAME_H_
 

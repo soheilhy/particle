@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013, The Cyrus project authors.
+ * Copyright (C) 2013, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,10 +37,9 @@
 #include <utility>
 #include <vector>
 
-#include "cyrus/common/typename.h"
+#include "particle/typename.h"
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 using std::pair;
 using std::regex;
@@ -149,6 +148,5 @@ std::pair<boost::string_ref, boost::string_ref> get_pair_types(
       boost::string_ref(t.substr(e_pos + 1, s_pos -1)));
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 

@@ -26,13 +26,12 @@
  */
 
 
-#ifndef CPP_CYRUS_COMMON_FUNCTIONAL_H_
-#define CPP_CYRUS_COMMON_FUNCTIONAL_H_
+#ifndef CPP_PARTICLE_FUNCTIONAL_H_
+#define CPP_PARTICLE_FUNCTIONAL_H_
 
 #include <atomic>
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 template <typename Function>
 bool can_call() {
@@ -47,7 +46,7 @@ void call_once(Function func) {
   }
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_FUNCTIONAL_H_
+#endif  // CPP_PARTICLE_FUNCTIONAL_H_
+

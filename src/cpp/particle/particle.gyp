@@ -21,7 +21,7 @@
   'targets': [
     {
       'target_name': 'headers',
-      'type': '<(none)',
+      'type': 'none',
       'sources': [
         'bithacks.h',
         'branch.h',
@@ -51,7 +51,7 @@
       ],
     },
     {
-      'target_name': 'common_unittests',
+      'target_name': 'particle_unittests',
       'type': 'executable',
       'dependencies': [
         '<@(cpp_src_dir)/third_party/gtest.gyp:gtest_main',

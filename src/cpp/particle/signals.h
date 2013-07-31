@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012, The Cyrus project authors.
+ * Copyright (C) 2012-2013, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,12 @@
  * @version 0.1
  */
 
-#ifndef CPP_CYRUS_COMMON_SIGNALS_H_
-#define CPP_CYRUS_COMMON_SIGNALS_H_
+#ifndef CPP_PARTICLE_SIGNALS_H_
+#define CPP_PARTICLE_SIGNALS_H_
 
 #include <functional>
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 typedef int HandlerId;
 
@@ -52,7 +51,7 @@ class CleanupGaurd final {
  */
 void init_thread();
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_SIGNALS_H_
+#endif  // CPP_PARTICLE_SIGNALS_H_
+

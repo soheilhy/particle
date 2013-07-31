@@ -29,11 +29,10 @@
 #include <string>
 #include <vector>
 
-#include "cyrus/common/typename.h"
+#include "particle/typename.h"
 #include "gtest/gtest.h"
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 TEST(TypeNameTest, IntegralNames) {
   EXPECT_EQ("@b", demangle_type<bool>());
@@ -79,10 +78,9 @@ class Derived : public Base {
 
 TEST(TypeNameTest, PolymorphicTypeName) {
   Base* base = new Derived();
-  EXPECT_EQ("cyrus::common::Derived", type_name(*base));
+  EXPECT_EQ("particle::Derived", type_name(*base));
   delete(base);
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 

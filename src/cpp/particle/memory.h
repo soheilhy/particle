@@ -26,13 +26,12 @@
  */
 
 
-#ifndef CPP_CYRUS_COMMON_MEMORY_H_
-#define CPP_CYRUS_COMMON_MEMORY_H_
+#ifndef CPP_PARTICLE_MEMORY_H_
+#define CPP_PARTICLE_MEMORY_H_
 
 #include <memory>
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 /**
  * Represents objects that can be created only as shared_ptr's. Note that
@@ -66,10 +65,9 @@ class SharedOnly : public std::enable_shared_from_this<T> {
   }
 };
 
-#define FRIEND_SHARED_ONLY(T) friend class cyrus::common::SharedOnly<T>
+#define FRIEND_SHARED_ONLY(T) friend class particle::SharedOnly<T>
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_MEMORY_H_
+#endif  // CPP_PARTICLE_MEMORY_H_
 

@@ -29,11 +29,10 @@
 #include <string>
 #include <vector>
 
-#include "cyrus/common/memory.h"
+#include "particle/memory.h"
 #include "gtest/gtest.h"
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 class MySharedOnlyBase : public SharedOnly<MySharedOnlyBase> {
  public:
@@ -70,6 +69,5 @@ TEST(MemoryTest, SharedOnlyInheritance) {
   EXPECT_EQ(2, main_shared.use_count());
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012, The Cyrus project authors.
+ * Copyright (C) 2012, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,21 +19,20 @@
 
 /**
  * @file
- * @brief Common utilities for threads in Cyrus.
+ * @brief Common utilities for threads in Particle.
  *
  * @author Soheil Hassas Yeganeh <soheil@cs.toronto.edu>
  * @version 0.1
  */
 
-#ifndef CPP_CYRUS_COMMON_THREAD_H_
-#define CPP_CYRUS_COMMON_THREAD_H_
+#ifndef CPP_PARTICLE_THREAD_H_
+#define CPP_PARTICLE_THREAD_H_
 
 #include <thread>
 
 #include "cyrus/common/signals.h"
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 /**
  * Creates a thread that runs the function, and also registers the cleanup
@@ -50,7 +49,7 @@ std::function<void()> make_cyrus_thread(Function func) {
     };
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_THREAD_H_
+#endif  // CPP_PARTICLE_THREAD_H_
+

@@ -25,11 +25,10 @@
  * @version 0.1
  */
 
-#ifndef CPP_CYRUS_COMMON_BRANCH_H_
-#define CPP_CYRUS_COMMON_BRANCH_H_
+#ifndef CPP_PARTICLE_BRANCH_H_
+#define CPP_PARTICLE_BRANCH_H_
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 #ifdef __GNUC__
 #define has_builtin_expect
@@ -45,8 +44,7 @@ namespace common {
 #define unlikely(x) (x)
 #endif
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_BRANCH_H_
+#endif  // CPP_PARTICLE_BRANCH_H_
 

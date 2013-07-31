@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012, The Cyrus project authors.
+ * Copyright (C) 2012, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,16 +26,14 @@
  */
 
 
-#ifndef CPP_CYRUS_COMMON_BYTEORDERING_H_
-#define CPP_CYRUS_COMMON_BYTEORDERING_H_
+#ifndef CPP_PARTICLE_BYTEORDERING_H_
+#define CPP_PARTICLE_BYTEORDERING_H_
 
 #include <arpa/inet.h>
 
 #include <cstdint>
 
-
-namespace cyrus {
-namespace common {
+namespace particle {
 
 #if __BYTE_ORDER == __BIG_ENDIAN
 #define ntohll(x) (x)
@@ -105,7 +103,7 @@ inline uint64_t htonxx<uint64_t>(uint64_t data) {
 
 #undef htonll
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
 
-#endif  // CPP_CYRUS_COMMON_BYTEORDERING_H_
+#endif  // CPP_PARTICLE_BYTEORDERING_H_
+

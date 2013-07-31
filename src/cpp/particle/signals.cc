@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012, The Cyrus project authors.
+ * Copyright (C) 2012-2013, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,11 +34,10 @@
 #include <vector>
 #include <unordered_map>
 
-#include "cyrus/common/branch.h"
-#include "cyrus/common/signals.h"
+#include "particle/branch.h"
+#include "particle/signals.h"
 
-namespace cyrus {
-namespace common {
+namespace particle {
 
 using std::function;
 using std::initializer_list;
@@ -163,5 +162,5 @@ void init_thread() {
   pthread_sigmask(SIG_BLOCK, &signal_set, nullptr);
 }
 
-}  // namespace common
-}  // namespace cyrus
+}  // namespace particle
+
