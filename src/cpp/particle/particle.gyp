@@ -19,7 +19,8 @@
 
 {
   'variables': {
-    'particle_third_party_home': '<(particle_dir)/src/cpp/third_party',
+    'particle_src_dir': '<(particle_dir)/src/cpp',
+    'particle_third_party_dir': '<(particle_src_dir)/third_party',
   },
   'targets': [
     {
@@ -34,7 +35,13 @@
             '-pthread',
           ],
         },
+        'include_dirs': [
+          '<(particle_src_dir)',
+        ],
       },
+      'include_dirs': [
+        '<(particle_src_dir)',
+      ],
       'sources': [
         'bithacks.h',
         'branch.h',
@@ -48,6 +55,7 @@
     {
       'target_name': 'signal',
       'type': '<(library)',
+      'dependencies': ['headers'],
       'sources': [
         'singals.h',
         'signals.cc',
@@ -57,7 +65,8 @@
       'target_name': 'typename',
       'type': '<(library)',
       'dependencies': [
-        '<(particle_third_party_home)/boost.gyp:boost_common',
+        '<(particle_third_party_dir)/boost.gyp:boost_common',
+        'headers',
       ],
       'sources': [
         'typename.h',
@@ -68,8 +77,8 @@
       'target_name': 'particle_unittests',
       'type': 'executable',
       'dependencies': [
-        '<@(particle_third_party_home)/gtest.gyp:gtest_main',
-        '<@(particle_third_party_home)/gmock.gyp:gmock',
+        '<@(particle_third_party_dir)/gtest.gyp:gtest_main',
+        '<@(particle_third_party_dir)/gmock.gyp:gmock',
         'headers',
         'typename',
       ],
