@@ -30,10 +30,10 @@
         '<(folly_home)',
       ],
       'dependencies': [
-        '<(cpp_src_dir)/third_party/boost.gyp:boost_common',
-        '<(cpp_src_dir)/third_party/dconv.gyp:dconv',
-        '<(cpp_src_dir)/third_party/gflags.gyp:gflags',
-        '<(cpp_src_dir)/third_party/glog.gyp:glog',
+        'boost.gyp:boost_common',
+        'dconv.gyp:dconv',
+        'gflags.gyp:gflags',
+        'glog.gyp:glog',
       ],
       'all_dependent_settings': {
         'include_dirs': [

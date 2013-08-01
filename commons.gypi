@@ -18,10 +18,8 @@
 
 {
   'variables': {
-    # Source folders.
-    'src_dir': 'src',
-    'cpp_src_dir': '<(src_dir)/cpp',
-    'python_src_dir': '<(src_dir)/python)',
+    # Paths.
+    'particle_dir': '.',
 
     # Compilation flags.
     'common_cflags': [
@@ -45,7 +43,7 @@
           'OTHER_CFLAGS': ['<@(debug_cflags)', '<@(debug_cflags_cc)'],
         },
         'include_dirs': [
-          '<(cpp_src_dir)',
+          '<(particle_dir)/src/cpp',
         ],
       },
       'Release': {
@@ -57,7 +55,7 @@
           'OTHER_CFLAGS': ['<@(release_cflags)', '<@(release_cflags_cc)'],
         },
         'include_dirs': [
-          '<(cpp_src_dir)',
+          '<(particle_dir)/src/cpp',
         ],
       },
     },

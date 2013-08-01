@@ -18,6 +18,9 @@
 #
 
 {
+  'variables': {
+    'particle_third_party_home': '<(particle_dir)/src/cpp/third_party',
+  },
   'targets': [
     {
       'target_name': 'headers',
@@ -54,7 +57,7 @@
       'target_name': 'typename',
       'type': '<(library)',
       'dependencies': [
-        '<@(cpp_src_dir)/third_party/boost.gyp:boost_common',
+        '<(particle_third_party_home)/boost.gyp:boost_common',
       ],
       'sources': [
         'typename.h',
@@ -65,8 +68,8 @@
       'target_name': 'particle_unittests',
       'type': 'executable',
       'dependencies': [
-        '<@(cpp_src_dir)/third_party/gtest.gyp:gtest_main',
-        '<@(cpp_src_dir)/third_party/gmock.gyp:gmock',
+        '<@(particle_third_party_home)/gtest.gyp:gtest_main',
+        '<@(particle_third_party_home)/gmock.gyp:gmock',
         'headers',
         'typename',
       ],

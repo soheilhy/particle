@@ -18,26 +18,26 @@
 #
 
 {
+  'variables': {
+    'particle_cpp_src_dir': '<(particle_dir)/src/cpp',
+  },
   'targets': [
     {
       'target_name': 'particle',
       'type': 'none',
-      'variables': {
-        'particle_home': '<(cpp_src_dir)/particle',
-      },
       'all_dependent_settings': {
         'include_dirs': [
-          '<(particle_home)',
+          '<(particle_cpp_src_dir)',
         ],
       },
       'dependencies': [
-        '<(cpp_src_dir)/third_party/boost.gyp:boost_common',
-        '<(cpp_src_dir)/third_party/folly.gyp:folly',
-        '<(cpp_src_dir)/third_party/glog.gyp:glog',
-        '<(cpp_src_dir)/third_party/sparsehash.gyp:sparsehash',
-        '<(particle_home)/particle.gyp:headers',
-        '<(particle_home)/particle.gyp:signal',
-        '<(particle_home)/particle.gyp:typename',
+        '<(particle_cpp_src_dir)/third_party/boost.gyp:boost_common',
+        '<(particle_cpp_src_dir)/third_party/folly.gyp:folly',
+        '<(particle_cpp_src_dir)/third_party/glog.gyp:glog',
+        '<(particle_cpp_src_dir)/third_party/sparsehash.gyp:sparsehash',
+        '<(particle_cpp_src_dir)/particle/particle.gyp:headers',
+        '<(particle_cpp_src_dir)/particle/particle.gyp:signal',
+        '<(particle_cpp_src_dir)/particle/particle.gyp:typename',
       ],
       'sources': [
         'commons.gypi',
@@ -47,25 +47,22 @@
       'target_name': 'particle_testlib',
       'type': 'none',
       'dependencies': [
-        '<(cpp_src_dir)/third_party/gmock.gyp:gmock',
-        '<(cpp_src_dir)/third_party/gtest.gyp:gtest',
+        '<(particle_cpp_src_dir)/third_party/gmock.gyp:gmock',
+        '<(particle_cpp_src_dir)/third_party/gtest.gyp:gtest',
       ],
     },
     {
       'target_name': 'particle_testrunner',
       'type': 'none',
       'dependencies': [
-        '<(cpp_src_dir)/third_party/gtest.gyp:gtest_main',
+        '<(particle_cpp_src_dir)/third_party/gtest.gyp:gtest_main',
       ],
     },
     {
       'target_name': 'particle_tests',
       'type': 'none',
-      'variables': {
-        'particle_home': '<(cpp_src_dir)/particle',
-      },
       'dependencies': [
-        '<(particle_home)/particle.gyp:particle_unittests',
+        '<(particle_cpp_src_dir)/particle/particle.gyp:particle_unittests',
       ],
     },
   ]
