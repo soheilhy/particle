@@ -77,6 +77,16 @@ std::string type_name(const T& obj) {
   return demangle_type(typeid(obj), drop_const);
 }
 
+template <typename T>
+const char* type_name_cstr(const T& obj) {
+  return typeid(obj).name();
+}
+
+template <typename T>
+const char* type_name_cstr() {
+  return typeid(T).name();
+}
+
 inline bool is_string(const std::string& t) {
   return t == type_name<std::string>();
 }
