@@ -99,6 +99,13 @@ inline bool is_pair_typename(const std::string& t) {
   return !pair_types.first.empty() && !pair_types.second.empty();
 }
 
+typedef size_t TypeIndex;
+
+inline TypeIndex get_type_index(const std::type_info& info) {
+  return reinterpret_cast<TypeIndex>(info.name());
+}
+
+
 }  // namespace particle
 
 #endif  // CPP_PARTICLE_TYPENAME_H_
