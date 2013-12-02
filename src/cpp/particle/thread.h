@@ -43,10 +43,49 @@ namespace particle {
  */
 template <typename Function>
 std::function<void()> make_particle_thread(Function func) {
-  return [func] () mutable {  // NOLINT
-      init_thread();
-      func();
-    };
+  return [func]() mutable {  // NOLINT
+    init_thread();
+    func();
+  };
+}
+
+/**
+ * Static per thread storage. This is a much simpler version of
+ * folly::StaticMeta with no special functionality.
+ */
+template <typename Value, typename Tag>
+class StaticThreadLocal {
+ public:
+  static Value* get() {
+    init();
+    return StaticThreadLocal::value;
+  }
+
+  static void set(Value* value) {
+    init();
+    StaticThreadLocal::value = value;
+  }
+
+  static void init() {
+    static __thread bool initialized = (StaticThreadLocal::value = nullptr);
+    (void) initialized;  // Suppress unused warning.
+  }
+
+ private:
+  static __thread Value* value;
+};
+
+template <typename Value, typename Tag>
+__thread Value* StaticThreadLocal<Value, Tag>::value = nullptr;
+
+template <typename Value, typename Tag>
+Value* get_thread_local() {
+  return StaticThreadLocal<Value, Tag>::get();
+}
+
+template <typename Value, typename Tag>
+void set_thread_local(Value* value) {
+  StaticThreadLocal<Value, Tag>::set(value);
 }
 
 }  // namespace particle
