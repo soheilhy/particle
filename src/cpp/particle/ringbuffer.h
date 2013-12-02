@@ -87,19 +87,38 @@ class RingBuffer final {
     std::free(buffer);
   }
 
+  RingBuffer(const RingBuffer&) = delete;
+  RingBuffer(RingBuffer&&) = delete;
+
+  RingBuffer& operator=(const RingBuffer&) = delete;
+  RingBuffer& operator=(RingBuffer&&) = delete;
+
   /**
    * @param record The record to write. (The record will be moved into the
    *     buffer).
    * @return Whether the write was succesful. Note: It may spuriously fail.
    */
   bool try_write(const T& record) {
-    size_t current_free_index = lower_free_index.load();
+    // Make a copy and move it.
+    return try_write(std::move(T(record)));
+  }
+
+  /**
+   * @param record The record to write. (The record will be moved into the
+   *     buffer).
+   * @return Whether the write was succesful. Note: It may spuriously fail.
+   */
+  bool try_write(T&& record) {
+    size_t current_free_index =
+        lower_free_index.load(std::memory_order_acquire);
+
     size_t next_free_index = 0;
 
     do {
       // If there is another writer with an onging write.
       if (!allow_multiple_entrance &&
-          !index_equal(upper_full_index.load(), current_free_index)) {
+          !index_equal(upper_full_index.load(std::memory_order_acquire),
+                       current_free_index)) {
         return false;
       }
 
@@ -107,12 +126,13 @@ class RingBuffer final {
       next_free_index = current_free_index + 1;
 
       // If the buffer is full.
-      if (index_equal(upper_free_index.load(), next_free_index)) {
+      if (index_equal(upper_free_index.load(std::memory_order_acquire),
+                      next_free_index)) {
         return false;
       }
-    } while (!lower_free_index.compare_exchange_weak(current_free_index,
-          next_free_index));
-
+    } while (!lower_free_index.compare_exchange_weak(
+                  current_free_index, next_free_index,
+                  std::memory_order_release, std::memory_order_acquire));
 
     new (&buffer[masked(next_free_index)]) T(std::move(record));  // NOLINT
 
@@ -120,8 +140,9 @@ class RingBuffer final {
     size_t current_free_index_copy;
     do {
       current_free_index_copy = current_free_index;
-    } while (!upper_full_index.compare_exchange_weak(current_free_index_copy,
-        next_free_index));
+    } while (!upper_full_index.compare_exchange_weak(
+                  current_free_index_copy, next_free_index,
+                  std::memory_order_release, std::memory_order_acquire));
 
     return true;
   }
@@ -138,18 +159,21 @@ class RingBuffer final {
     do {
       // If there is some reader, with an ongoing read.
       if (!allow_multiple_entrance &&
-          !index_equal(upper_free_index.load(), current_full_index)) {
+          !index_equal(upper_free_index.load(std::memory_order_acquire),
+                       current_full_index)) {
         return false;
       }
 
       // Buffer is empty.
-      if (index_equal(upper_full_index.load(), current_full_index)) {
+      if (index_equal(upper_full_index.load(std::memory_order_acquire),
+                      current_full_index)) {
         return false;
       }
 
       next_full_index = current_full_index + 1;
     } while (!lower_full_index.compare_exchange_weak(
-        current_full_index, next_full_index));
+                  current_full_index, next_full_index,
+                  std::memory_order_release, std::memory_order_acquire));
 
     if (record != nullptr) {
       *record = std::move(buffer[masked(next_full_index)]);
@@ -162,7 +186,8 @@ class RingBuffer final {
     do {
       current_full_index_copy = current_full_index;
     } while (!upper_free_index.compare_exchange_weak(
-        current_full_index_copy, next_full_index));
+                  current_full_index_copy, next_full_index,
+                  std::memory_order_release, std::memory_order_acquire));
 
     return true;
   }
