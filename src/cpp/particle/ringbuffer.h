@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012, The Cyrus project authors.
+ * Copyright (C) 2012-2013, The Particle project authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,11 @@
 #include <memory>
 #include <mutex>
 
+#include "particle/array.h"
 #include "particle/bithacks.h"
+#include "particle/branch.h"
+#include "particle/cpu.h"
+#include "particle/thread.h"
 
 namespace particle {
 
@@ -244,7 +248,7 @@ class RingBuffer final {
   std::atomic<size_t> lower_free_index;
   /** Index pointing to the element right after the last free element. */
   std::atomic<size_t> upper_free_index;
-  /** Index pointing to the element right before the First unread element. */
+  /** Index pointing to the element right before the first unread element. */
   std::atomic<size_t> lower_full_index;
   /** Index of the last unread element. */
   std::atomic<size_t> upper_full_index;
@@ -254,6 +258,64 @@ class RingBuffer final {
 
   /** The container that stores buffer elements. */
   T* const buffer;
+};
+
+/**
+ * Allocates one ringbuffer per cpu. This suites environments where num-of-cpu
+ * threads are isolated and assigned to a single cpu.
+ *
+ * If you don't have such a system, and your threads can run on arbitrary
+ * processors, use folly::ThreadLocalPtr<RingBuffer> instead of this class.
+ */
+template <typename T>
+class PerCpuRingBuffer {
+ public:
+  typedef RingBuffer<T> Buffer;
+
+  explicit PerCpuRingBuffer(size_t capacity_per_cpu)
+      : buffers(make_array<Buffer>(std::thread::hardware_concurrency(),
+                                   capacity_per_cpu)) {
+    assert(buffers.size() > 0);
+  }
+
+  PerCpuRingBuffer(const PerCpuRingBuffer&) = delete;
+  PerCpuRingBuffer(PerCpuRingBuffer&&) = delete;
+
+  PerCpuRingBuffer& operator=(const PerCpuRingBuffer&) = delete;
+  PerCpuRingBuffer& operator=(PerCpuRingBuffer&&) = delete;
+
+  bool try_write(const T& record,
+                 CpuId cpu_id = get_cached_cpu_of_this_thread()) {
+    return try_write(std::move(T(record)), cpu_id);
+  }
+
+  bool try_write(T&& record, CpuId cpu_id = get_cached_cpu_of_this_thread()) {
+    assert(cpu_id < buffers.size());
+    return buffers[cpu_id].try_write(std::move(record));
+  }
+
+  bool try_read(T* record, CpuId cpu_id = get_cached_cpu_of_this_thread()) {
+    assert(cpu_id < buffers.size());
+    return buffers[cpu_id].try_read(record);
+  }
+
+  // TODO(soheil): Add api to read from any non-empty buffer.
+
+  /** @return The size of the buffer allocated for cpu_id. */
+  size_t guess_size(CpuId cpu_id) {
+    return buffers[cpu_id].guess_size();
+  }
+
+  size_t capacity_of_cpu(CpuId cpu_id) {
+    return buffers[cpu_id].capacity();
+  }
+
+  size_t get_cpu_count() {
+    return buffers.size();
+  }
+
+ private:
+  particle::DynamicArray<Buffer> buffers;
 };
 
 }  // namespace particle

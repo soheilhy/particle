@@ -56,35 +56,28 @@ std::function<void()> make_particle_thread(Function func) {
 template <typename Value, typename Tag>
 class StaticThreadLocal {
  public:
-  static Value* get() {
-    init();
+  static Value get() {
     return StaticThreadLocal::value;
   }
 
-  static void set(Value* value) {
-    init();
+  static void set(Value value) {
     StaticThreadLocal::value = value;
   }
 
-  static void init() {
-    static __thread bool initialized = (StaticThreadLocal::value = nullptr);
-    (void) initialized;  // Suppress unused warning.
-  }
-
  private:
-  static __thread Value* value;
+  static __thread Value value;
 };
 
 template <typename Value, typename Tag>
-__thread Value* StaticThreadLocal<Value, Tag>::value = nullptr;
+__thread Value StaticThreadLocal<Value, Tag>::value {};  // NOLINT
 
 template <typename Value, typename Tag>
-Value* get_thread_local() {
+Value get_thread_local() {
   return StaticThreadLocal<Value, Tag>::get();
 }
 
 template <typename Value, typename Tag>
-void set_thread_local(Value* value) {
+void set_thread_local(Value value) {
   StaticThreadLocal<Value, Tag>::set(value);
 }
 
